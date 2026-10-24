@@ -4,7 +4,7 @@ Kaarigar is an Etsy-style marketplace for Pakistani artisans and home-based sell
 
 ## Live demo
 
-**https://kaarigar-kappa.vercel.app**
+**https://thekaarigar.vercel.app**
 
 Deployed on Vercel. Every push to `main` deploys automatically.
 
