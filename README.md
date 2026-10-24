@@ -2,9 +2,11 @@
 
 Kaarigar is an Etsy-style marketplace for Pakistani artisans and home-based sellers. This is the **React frontend**. All data is saved in the browser (localStorage) until the backend is connected.
 
-## Quick demo (no setup)
+## Live demo
 
-Open **`Kaarigar-Demo.html`** in Chrome or Edge. The whole app is in this one file.
+**https://kaarigar-kappa.vercel.app**
+
+Deployed on Vercel. Every push to `main` deploys automatically.
 
 ## Run the project
 
