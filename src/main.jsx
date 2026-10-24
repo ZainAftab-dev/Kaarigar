@@ -1,0 +1,17 @@
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import { HashRouter } from 'react-router-dom'
+import { StoreProvider } from './context/StoreContext'
+import App from './App'
+import './index.css'
+
+// HashRouter lets the built site open directly from a folder (no server needed)
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <HashRouter>
+      <StoreProvider>
+        <App />
+      </StoreProvider>
+    </HashRouter>
+  </StrictMode>,
+)
