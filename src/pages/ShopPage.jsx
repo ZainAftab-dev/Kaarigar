@@ -2,7 +2,8 @@ import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useStore } from '../context/StoreContext'
 import ProductCard from '../components/ProductCard'
-import { EmptyState } from '../components/Common'
+import { EmptyState, Photo } from '../components/Common'
+import { usePageTitle } from '../helpers'
 import Icon from '../components/Icon'
 
 export default function ShopPage() {
@@ -12,6 +13,7 @@ export default function ShopPage() {
   const [following, setFollowing] = useState(false)
 
   const shop = getShop(id)
+  usePageTitle(shop && shop.status === 'approved' ? shop.name : 'Shop not found')
   if (!shop || shop.status !== 'approved') {
     return <div className="wrap page"><EmptyState icon="store" title="Shop not found" action={<Link to="/shop" className="btn">Browse products</Link>} /></div>
   }
@@ -24,7 +26,9 @@ export default function ShopPage() {
 
   return (
     <>
-      <div className="shop-cover" style={{ background: `linear-gradient(120deg, ${shop.color}22, ${shop.color}55)` }} />
+      <div className="shop-cover" style={{ background: `linear-gradient(120deg, ${shop.color}22, ${shop.color}55)` }}>
+        {shop.cover && <Photo src={shop.cover} alt="" size={1600} eager />}
+      </div>
       <div className="wrap page shop-page">
         <div className="shop-head">
           <span className="avatar xl" style={{ background: shop.color }}>{shop.name[0]}</span>

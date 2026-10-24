@@ -1,10 +1,12 @@
 import { Link, useParams } from 'react-router-dom'
 import { useStore } from '../context/StoreContext'
 import { EmptyState } from '../components/Common'
+import { usePageTitle } from '../helpers'
 import Icon from '../components/Icon'
 import { formatPrice } from '../utils'
 
 export default function OrderSuccess() {
+  usePageTitle('Order placed')
   const { id } = useParams()
   const { orders } = useStore()
   const order = orders.find((o) => o.id === id)

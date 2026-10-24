@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { useStore } from '../../context/StoreContext'
 import { ProductImage } from '../../components/Common'
+import { usePageTitle } from '../../helpers'
 import Icon from '../../components/Icon'
 import { ORDER_STATUSES, formatDate, formatPrice } from '../../utils'
 
@@ -121,7 +122,7 @@ function Products() {
           <tbody>
             {list.map((p) => (
               <tr key={p.id}>
-                <td><div className="t-prod"><ProductImage product={p} className="thumb sm" /><Link to={`/product/${p.id}`}>{p.name}</Link></div></td>
+                <td><div className="t-prod"><ProductImage product={p} className="thumb sm" size={120} /><Link to={`/product/${p.id}`}>{p.name}</Link></div></td>
                 <td>{getShop(p.shopId)?.name}</td>
                 <td>{getCategory(p.categoryId)?.name || '—'}</td>
                 <td>{formatPrice(p.price)}</td>
@@ -232,6 +233,7 @@ function Categories() {
 }
 
 export default function AdminDashboard() {
+  usePageTitle('Admin panel')
   const [params, setParams] = useSearchParams()
   const tab = params.get('tab') || 'overview'
   const setTab = (t) => setParams({ tab: t })

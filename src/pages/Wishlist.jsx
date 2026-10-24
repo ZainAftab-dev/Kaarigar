@@ -2,8 +2,10 @@ import { Link } from 'react-router-dom'
 import { useStore } from '../context/StoreContext'
 import ProductCard from '../components/ProductCard'
 import { EmptyState } from '../components/Common'
+import { usePageTitle } from '../helpers'
 
 export default function Wishlist() {
+  usePageTitle('Favourites')
   const { wishlist, liveProducts } = useStore()
   const items = liveProducts.filter((p) => wishlist.includes(p.id))
 

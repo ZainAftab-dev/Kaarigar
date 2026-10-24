@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { useStore } from '../../context/StoreContext'
 import { EmptyState, ProductImage } from '../../components/Common'
+import { usePageTitle } from '../../helpers'
 import Icon from '../../components/Icon'
 import { ORDER_STATUSES, formatDate, formatPrice } from '../../utils'
 
@@ -97,7 +98,7 @@ function Products({ myProducts }) {
             <tbody>
               {list.map((p) => (
                 <tr key={p.id}>
-                  <td><div className="t-prod"><ProductImage product={p} className="thumb sm" /><Link to={`/product/${p.id}`}>{p.name}</Link></div></td>
+                  <td><div className="t-prod"><ProductImage product={p} className="thumb sm" size={120} /><Link to={`/product/${p.id}`}>{p.name}</Link></div></td>
                   <td>{getCategory(p.categoryId)?.name}</td>
                   <td>{formatPrice(p.price)}</td>
                   <td>
@@ -187,6 +188,7 @@ function ShopSettings({ shop }) {
 }
 
 export default function SellerDashboard() {
+  usePageTitle('Seller dashboard')
   const { user, getShop, products, orders } = useStore()
   const [params, setParams] = useSearchParams()
   const tab = params.get('tab') || 'overview'

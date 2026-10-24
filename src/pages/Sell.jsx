@@ -2,8 +2,12 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Icon from '../components/Icon'
 import { formatPrice } from '../utils'
+import { Photo } from '../components/Common'
+import { photo } from '../data/seed'
+import { usePageTitle } from '../helpers'
 
 export default function Sell() {
+  usePageTitle('Sell on Kaarigar')
   // simple earnings calculator
   const [price, setPrice] = useState(2500)
   const [perMonth, setPerMonth] = useState(20)
@@ -12,7 +16,8 @@ export default function Sell() {
   return (
     <>
       <section className="sell-hero">
-        <div className="wrap">
+        <Photo src={photo(34230986, 1800)} alt="" size={1800} className="sell-hero-bg" eager />
+        <div className="wrap sell-hero-inner">
           <span className="pill">For artisans &amp; home-based sellers</span>
           <h1>Turn your hunar into a business.</h1>
           <p>Open a free Kaarigar shop and sell your handmade products to buyers in every city of Pakistan.</p>

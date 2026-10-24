@@ -1,10 +1,12 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useStore } from '../context/StoreContext'
 import { EmptyState, ProductImage, QtyPicker } from '../components/Common'
+import { usePageTitle } from '../helpers'
 import Icon from '../components/Icon'
 import { FREE_DELIVERY_LIMIT, formatPrice, shippingFor } from '../utils'
 
 export default function Cart() {
+  usePageTitle('Your cart')
   const { cartItems, cartSubtotal, updateCartQty, removeFromCart, getShop, toggleWishlist, wishlist } = useStore()
   const navigate = useNavigate()
 
@@ -39,7 +41,7 @@ export default function Cart() {
                 <Link to={`/shop/${sid}`} className="cart-shop-name"><Icon name="store" size={18} />{shop?.name}</Link>
                 {cartItems.filter((l) => l.product.shopId === sid).map(({ product, qty }) => (
                   <div className="cart-line" key={product.id}>
-                    <Link to={`/product/${product.id}`}><ProductImage product={product} className="thumb" /></Link>
+                    <Link to={`/product/${product.id}`}><ProductImage product={product} className="thumb" size={200} /></Link>
                     <div className="cl-info">
                       <Link to={`/product/${product.id}`} className="cl-name">{product.name}</Link>
                       <span className="muted small">{product.stock <= 5 ? `Only ${product.stock} left` : 'In stock'}</span>

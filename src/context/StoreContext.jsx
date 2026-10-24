@@ -7,6 +7,18 @@ import * as seed from '../data/seed'
 
 const StoreContext = createContext(null)
 
+// When the sample data changes (new products, photos...), bump this number.
+// Visitors with old saved data then get the fresh catalogue automatically.
+const DATA_VERSION = '2'
+try {
+  if (localStorage.getItem('kg_version') !== DATA_VERSION) {
+    Object.keys(localStorage).filter((k) => k.startsWith('kg_')).forEach((k) => localStorage.removeItem(k))
+    localStorage.setItem('kg_version', DATA_VERSION)
+  }
+} catch {
+  // storage blocked: the app still works, just without saving
+}
+
 function usePersisted(key, initialValue) {
   const [value, setValue] = useState(() => {
     try {
@@ -222,8 +234,8 @@ export function StoreProvider({ children }) {
   }
 
   function resetDemoData() {
-    Object.keys(localStorage).filter((k) => k.startsWith('kg_')).forEach((k) => localStorage.removeItem(k))
-    window.location.reload()
+    Object.keys(localStorage).filter((k) => k.startsWith('kg_') && k !== 'kg_version').forEach((k) => localStorage.removeItem(k))
+    window.location.assign(import.meta.env.MODE === 'demo' ? window.location.pathname : '/')
   }
 
   const value = {

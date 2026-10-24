@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useStore } from '../../context/StoreContext'
 import { EmptyState, ProductImage } from '../../components/Common'
+import { usePageTitle } from '../../helpers'
 import Icon from '../../components/Icon'
 
 // Shrinks an uploaded photo so it fits in browser storage
@@ -28,6 +29,7 @@ function resizeImage(file, maxSize = 700) {
 
 export default function ProductForm() {
   const { id } = useParams()
+  usePageTitle(id ? 'Edit product' : 'Add product')
   const navigate = useNavigate()
   const { user, categories, getProduct, addProduct, updateProduct, showToast } = useStore()
   const editing = Boolean(id)

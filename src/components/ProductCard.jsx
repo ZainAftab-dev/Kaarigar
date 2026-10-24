@@ -14,7 +14,7 @@ export default function ProductCard({ product }) {
     <article className="card">
       <div className="card-img">
         <Link to={`/product/${product.id}`} tabIndex={-1}>
-          <ProductImage product={product} />
+          <ProductImage product={product} size={500} />
         </Link>
         <button
           className={'fav' + (saved ? ' on' : '')} aria-pressed={saved}

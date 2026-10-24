@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import { useStore } from '../context/StoreContext'
 import ProductCard from '../components/ProductCard'
 import { Breadcrumbs, EmptyState } from '../components/Common'
+import { usePageTitle } from '../helpers'
 import Icon from '../components/Icon'
 
 const PAGE_SIZE = 12
@@ -60,6 +61,7 @@ export default function Shop() {
 
   const category = getCategory(cat)
   const title = q ? `Results for "${q}"` : category ? category.name : deals ? 'Deals' : 'All handmade products'
+  usePageTitle(title)
 
   const chips = []
   if (category) chips.push(['cat', category.name])

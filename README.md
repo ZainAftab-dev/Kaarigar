@@ -16,7 +16,7 @@ You need Node.js 18+.
 npm install
 npm run dev          # start at http://localhost:5173
 npm run build        # production build in /dist
-npm run build:demo   # single-file demo in /demo/index.html
+npm run build:demo   # single-file demo in /demo/index.html (opens without a server)
 ```
 
 ## Demo accounts (password: `123456`)
@@ -46,6 +46,7 @@ Promo codes at checkout: `KAARIGAR10` (10% off), `EID20` (20% off).
 | Account | `/account` | Edit profile, change password, reset demo data |
 | Sell on Kaarigar | `/sell` | Seller landing page with an earnings calculator |
 | Help | `/help` | FAQ and contact form |
+| Photo credits | `/credits` | Photographers whose images are used |
 | Seller dashboard | `/seller` | Sales chart, products (add / edit / delete / stock), orders (change status), shop settings |
 | Add / edit product | `/seller/products/new` | Photo upload, preview, validation |
 | Admin panel | `/admin` | Approve / reject / suspend sellers, manage products, orders, users and categories |
@@ -58,6 +59,10 @@ Promo codes at checkout: `KAARIGAR10` (10% off), `EID20` (20% off).
 4. Sign in as **buyer** → add it to the cart → checkout → **My orders**.
 5. Sign in as the seller → Orders → change the status to **Shipped**. The buyer sees the update.
 
+## Photos
+
+Product, category and story photos are free-to-use images from [Pexels](https://www.pexels.com/license/), loaded from the Pexels image CDN at the right size for each screen. Photographers are credited on the `/credits` page. If a photo can't load, the site shows a neutral placeholder instead of a broken image.
+
 ## Folder structure
 
 ```
@@ -69,6 +74,7 @@ src/
   pages/seller/           seller dashboard + product form
   pages/admin/            admin panel
   utils.js                price format, delivery fee, validation
+  helpers.js              image sizing, page titles
   index.css               all styles (responsive)
 ```
 

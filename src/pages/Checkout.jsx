@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { useStore } from '../context/StoreContext'
 import { ProductImage } from '../components/Common'
+import { usePageTitle } from '../helpers'
 import Icon from '../components/Icon'
 import { PROMO_CODES, formatPrice, isValidPhone, shippingFor } from '../utils'
 
@@ -12,6 +13,7 @@ const PAYMENTS = [
 ]
 
 export default function Checkout() {
+  usePageTitle('Checkout')
   const { user, cartItems, cartSubtotal, placeOrder, cities, showToast } = useStore()
   const navigate = useNavigate()
 
@@ -143,7 +145,7 @@ export default function Checkout() {
           <div className="mini-lines">
             {cartItems.map(({ product, qty }) => (
               <div className="mini-line" key={product.id}>
-                <div className="mini-img"><ProductImage product={product} /><span>{qty}</span></div>
+                <div className="mini-img"><ProductImage product={product} size={120} /><span>{qty}</span></div>
                 <span className="mini-name">{product.name}</span>
                 <b>{formatPrice(product.price * qty)}</b>
               </div>

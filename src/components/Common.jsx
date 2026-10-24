@@ -1,14 +1,26 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, Navigate, useLocation } from 'react-router-dom'
 import { useStore } from '../context/StoreContext'
 import Icon from './Icon'
+import { sizedImage } from '../helpers'
 
-// Product picture: shows the uploaded image, or a coloured tile with the category icon.
-export function ProductImage({ product, className = '', iconSize }) {
+// Product picture: shows the product photo, or a coloured tile with the
+// category icon if there is no photo (or it fails to load).
+export function ProductImage({ product, className = '', iconSize, size = 600, eager = false }) {
   const { getCategory } = useStore()
+  const [failed, setFailed] = useState(false)
   const cat = getCategory(product.categoryId)
-  if (product.image) {
-    return <img className={'ph ' + className} src={product.image} alt={product.name} />
+  if (product.image && !failed) {
+    return (
+      <img
+        className={'ph photo ' + className}
+        src={sizedImage(product.image, size)}
+        alt={product.name}
+        loading={eager ? 'eager' : 'lazy'}
+        decoding="async"
+        onError={() => setFailed(true)}
+      />
+    )
   }
   return (
     <div className={'ph ' + className} style={{ background: cat?.color || '#EDE7DD' }} role="img" aria-label={product.name}>
@@ -116,4 +128,11 @@ export function Breadcrumbs({ items }) {
 
 export function StatusBadge({ status }) {
   return <span className={'status s-' + status.toLowerCase()}>{status}</span>
+}
+
+// A photo with a soft background colour while it loads, and a safe fallback
+export function Photo({ src, alt = '', className = '', size = 800, eager = false }) {
+  const [failed, setFailed] = useState(false)
+  if (!src || failed) return <div className={'photo-fallback ' + className} role={alt ? 'img' : undefined} aria-label={alt || undefined} />
+  return <img className={'photo ' + className} src={sizedImage(src, size)} alt={alt} loading={eager ? 'eager' : 'lazy'} decoding="async" onError={() => setFailed(true)} />
 }

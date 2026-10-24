@@ -3,6 +3,9 @@ import { Link, Navigate, useNavigate, useSearchParams } from 'react-router-dom'
 import { useStore } from '../context/StoreContext'
 import Icon from '../components/Icon'
 import { isValidEmail, isValidPhone } from '../utils'
+import { Photo } from '../components/Common'
+import { usePageTitle } from '../helpers'
+import { photo } from '../data/seed'
 
 function homeFor(user) {
   if (user.role === 'seller') return '/seller'
@@ -10,7 +13,20 @@ function homeFor(user) {
   return '/'
 }
 
+function AuthSide({ seller }) {
+  return (
+    <div className="auth-side">
+      <Photo src={photo(seller ? 37619027 : 40303896, 1000)} alt="" size={1000} eager />
+      <div className="auth-quote">
+        <p>{seller ? 'Sell your handmade work to buyers in every city of Pakistan.' : 'Real things, made by real hands. Delivered to your door.'}</p>
+        <span>Kaarigar · Handmade in Pakistan</span>
+      </div>
+    </div>
+  )
+}
+
 export function Login() {
+  usePageTitle('Sign in')
   const { login, user, users } = useStore()
   const [params] = useSearchParams()
   const navigate = useNavigate()
@@ -36,6 +52,7 @@ export function Login() {
 
   return (
     <div className="auth-page">
+      <AuthSide />
       <form className="auth-card" onSubmit={submit} noValidate>
         <h1>Sign in</h1>
         <p className="muted">Welcome back to Kaarigar</p>
@@ -68,6 +85,7 @@ export function Login() {
 }
 
 export function Signup() {
+  usePageTitle('Create account')
   const { signup, user, cities } = useStore()
   const [params] = useSearchParams()
   const navigate = useNavigate()
@@ -105,6 +123,7 @@ export function Signup() {
 
   return (
     <div className="auth-page">
+      <AuthSide seller={role === 'seller'} />
       <form className="auth-card wide" onSubmit={submit} noValidate>
         <h1>Create your account</h1>
         <div className="role-switch" role="radiogroup" aria-label="Account type">

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useStore } from '../context/StoreContext'
 import { EmptyState, ProductImage, StatusBadge } from '../components/Common'
+import { usePageTitle } from '../helpers'
 import { formatDate, formatPrice } from '../utils'
 
 const STEPS = ['Pending', 'Confirmed', 'Shipped', 'Delivered']
@@ -17,6 +18,7 @@ function Tracker({ status }) {
 }
 
 export default function Orders() {
+  usePageTitle('My orders')
   const { user, orders, getProduct, updateOrderStatus, addToCart } = useStore()
   const [filter, setFilter] = useState('All')
   const [open, setOpen] = useState(null)
@@ -54,7 +56,7 @@ export default function Orders() {
               const product = getProduct(it.productId)
               return (
                 <div className="order-item" key={it.productId}>
-                  {product ? <Link to={`/product/${product.id}`}><ProductImage product={product} className="thumb" /></Link> : <div className="thumb ph" />}
+                  {product ? <Link to={`/product/${product.id}`}><ProductImage product={product} className="thumb" size={200} /></Link> : <div className="thumb ph" />}
                   <div>
                     <b>{it.name}</b>
                     <span className="muted small">Qty {it.qty} · {formatPrice(it.price)}</span>

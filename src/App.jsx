@@ -17,6 +17,7 @@ import Account from './pages/Account'
 import Sell from './pages/Sell'
 import Help from './pages/Help'
 import NotFound from './pages/NotFound'
+import Credits from './pages/Credits'
 import SellerDashboard from './pages/seller/SellerDashboard'
 import ProductForm from './pages/seller/ProductForm'
 import AdminDashboard from './pages/admin/AdminDashboard'
@@ -39,6 +40,7 @@ export default function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/sell" element={<Sell />} />
           <Route path="/help" element={<Help />} />
+          <Route path="/credits" element={<Credits />} />
 
           <Route path="/checkout" element={<RequireRole><Checkout /></RequireRole>} />
           <Route path="/order-success/:id" element={<RequireRole><OrderSuccess /></RequireRole>} />

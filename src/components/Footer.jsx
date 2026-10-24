@@ -48,6 +48,7 @@ export default function Footer() {
             <li><Link to="/orders">Track my order</Link></li>
             <li><Link to="/help">FAQ</Link></li>
             <li><Link to="/help#returns">Returns</Link></li>
+            <li><Link to="/credits">Photo credits</Link></li>
           </ul></div>
         </div>
         <div className="copy">

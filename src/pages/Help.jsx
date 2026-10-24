@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useStore } from '../context/StoreContext'
 import { isValidEmail } from '../utils'
+import { usePageTitle } from '../helpers'
 
 const FAQ = [
   ['How do I place an order?', 'Add items to your cart, go to checkout, enter your address and choose Cash on Delivery, JazzCash or Easypaisa. You will see your order in "My orders".'],
@@ -13,6 +14,7 @@ const FAQ = [
 ]
 
 export default function Help() {
+  usePageTitle('Help & FAQ')
   const { showToast } = useStore()
   const [open, setOpen] = useState(window.location.hash.includes('returns') ? 3 : 0)
   const [msg, setMsg] = useState({ name: '', email: '', text: '' })

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useStore } from '../context/StoreContext'
 import { Breadcrumbs, EmptyState, ProductImage, QtyPicker, StarInput, Stars } from '../components/Common'
+import { usePageTitle } from '../helpers'
 import ProductCard from '../components/ProductCard'
 import Icon from '../components/Icon'
 import { formatDate, formatPrice } from '../utils'
@@ -63,10 +64,11 @@ export default function ProductDetails() {
   const { getProduct, getShop, getCategory, liveProducts, addToCart, toggleWishlist, wishlist, user } = useStore()
   const [qty, setQty] = useState(1)
   const [tab, setTab] = useState('details')
-  const [view, setView] = useState(0)
+  const [zoom, setZoom] = useState(null)
 
   const product = getProduct(id)
   const shop = product && getShop(product.shopId)
+  usePageTitle(product ? product.name : 'Product not found')
   if (!product || shop?.status !== 'approved') {
     return <div className="wrap page"><EmptyState icon="search" title="Product not found" text="It may have been removed by the seller."
       action={<Link to="/shop" className="btn">Browse products</Link>} /></div>
@@ -83,8 +85,11 @@ export default function ProductDetails() {
     navigate('/checkout')
   }
 
-  // 3 "views" of the placeholder image (real photos replace this later)
-  const views = [1, 0.85, 0.7]
+  // hover zoom on the main photo (desktop)
+  function moveZoom(e) {
+    const r = e.currentTarget.getBoundingClientRect()
+    setZoom(`${((e.clientX - r.left) / r.width) * 100}% ${((e.clientY - r.top) / r.height) * 100}%`)
+  }
 
   return (
     <div className="wrap page">
@@ -92,16 +97,15 @@ export default function ProductDetails() {
 
       <div className="pd">
         <div className="gallery">
-          <div className="main-img">
-            <ProductImage product={product} className={'view-' + view} />
+          <div
+            className={'main-img' + (zoom ? ' zooming' : '')}
+            onMouseMove={product.image ? moveZoom : undefined}
+            onMouseLeave={() => setZoom(null)}
+            style={zoom ? { '--zoom-origin': zoom } : undefined}
+          >
+            <ProductImage product={product} size={1200} eager key={product.id} />
           </div>
-          <div className="thumbs">
-            {views.map((v, i) => (
-              <button key={i} className={view === i ? 'on' : ''} onClick={() => setView(i)} aria-label={`View image ${i + 1}`}>
-                <ProductImage product={product} className={'view-' + i} />
-              </button>
-            ))}
-          </div>
+          {product.image && <p className="muted small zoom-hint">Hover over the photo to zoom</p>}
         </div>
 
         <div className="pd-info">

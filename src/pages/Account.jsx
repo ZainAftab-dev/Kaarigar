@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { useStore } from '../context/StoreContext'
 import { isValidPhone } from '../utils'
+import { usePageTitle } from '../helpers'
 
 export default function Account() {
+  usePageTitle('Account settings')
   const { user, updateProfile, cities, showToast, resetDemoData } = useStore()
   const [form, setForm] = useState({ name: user.name, phone: user.phone || '', city: user.city || 'Lahore' })
   const [pass, setPass] = useState({ current: '', next: '' })
